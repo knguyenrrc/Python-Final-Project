@@ -69,16 +69,23 @@ class WeatherScraper(HTMLParser):
     def handle_data(self, data):
         """Handles the data event."""
         try:
+            cast = False
             if data.__eq__("Sum"):
                 self.tbody = False
 
             #Generates daily_temps dictionary.
             if self.td is True and self.counter <= 3 and self.tbody is True:
-                keys = ['Max', 'Min', 'Mean']
-                self.daily_temps[keys[self.counter - 1]] = data
+                try:
+                    tempCast = float(data)
+                    cast = True
+                except Exception as error:
+                    cast = False
+                if(cast):
+                    keys = ['Max', 'Min', 'Mean']
+                    self.daily_temps[keys[self.counter - 1]] = data
 
             #Generates weather dictionary.
-            if self.counter == 3:
+            if self.counter == 3 and cast:
                 self.weather[self.row_date] = self.daily_temps
                 self.daily_temps = self.daily_temps.copy()
 
