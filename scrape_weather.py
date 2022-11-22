@@ -117,8 +117,6 @@ class WeatherScraper(HTMLParser):
 
                     self.feed(html)
 
-                    self.counter=self.month_counter
-
                 except Exception as error:
                     print("Exception happened:", error)
 
@@ -155,8 +153,6 @@ class WeatherScraper(HTMLParser):
                     self.month_counter += 1
 
                     self.feed(html)
-
-                    self.counter=self.month_counter
 
                 except Exception as error:
                     print("Exception happened:", error)
