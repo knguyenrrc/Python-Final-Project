@@ -1,5 +1,5 @@
 """To hold and run database operations with the data gathered from scraping."""
-from asyncio.windows_events import NULL
+
 import datetime
 import dbcm
 from scrape_weather import WeatherScraper
@@ -14,7 +14,7 @@ class DBOperations:
 
     def initialize_db(self):
         """Uses Cursor when initialized to create the database and prints out message."""
-        if self.curr != NULL:
+        if self.curr is not None:
             self.curr.execute("""create table if not exists CHK_weather
             (id integer primary key autoincrement not null,
             sample_date text not null,
@@ -26,15 +26,15 @@ class DBOperations:
     
     def purge_data(self):
         """Uses cursor on initialization to delete database"""
-        if self.curr!=NULL:
+        if self.curr is not None:
             self.curr.execute("""DELETE FROM CHK_weather;""")
 
     def check_data(self,date):
         """in house function to check if the database already
          contains the date data returns True/false if it exists"""
-        if self.curr != NULL:
+        if self.curr is not None:
             exists = False
-            if self.curr!=NULL:
+            if self.curr is not None:
                 sql="""SELECT * FROM CHK_weather WHERE sample_date LIKE ?;"""
                 sub_value = (date,)
                 self.curr.execute(sql,sub_value)
@@ -71,11 +71,11 @@ data_dictionary = WeatherScraper()
 scrape_dict = data_dictionary.update_scrape(datetime.datetime(2022,11,11))
 print("Finished scraping...")
 
-with dbcm.DBCM("weather.sqlite") as dbcm_cursor:
-    ops = DBOperations(dbcm_cursor)
-    ops.initialize_db()
-    ops.purge_data()
-    ops.save_data(scrape_dict)
+# with dbcm.DBCM("weather.sqlite") as dbcm_cursor:
+#     ops = DBOperations(dbcm_cursor)
+#     ops.initialize_db()
+#     ops.purge_data()
+#     ops.save_data(scrape_dict)
 
 with dbcm.DBCM("weather.sqlite") as dbcm_cursor:
     ops = DBOperations(dbcm_cursor)
