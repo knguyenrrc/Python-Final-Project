@@ -61,9 +61,15 @@ class DBOperations:
     def fetch_data(self):
         """returns data as a tuple to be used."""
         records = self.curr.execute("SELECT * FROM CHK_weather")
-        for rows in records:
-            print(rows)
+        print(records[0][0])
         return records
+    
+    def latest_date(self):
+        """returns max date in database."""
+        record = self.curr.execute("SELECT MAX(sample_date) FROM CHK_weather")
+        result = self.curr.fetchone()
+
+        return result[0]
 
         
 data_dictionary = WeatherScraper()
@@ -79,5 +85,7 @@ print("Finished scraping...")
 
 with dbcm.DBCM("weather.sqlite") as dbcm_cursor:
     ops = DBOperations(dbcm_cursor)
+    print(ops.latest_date()) #testing max date
     ops.fetch_data()
+
 
