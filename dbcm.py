@@ -1,13 +1,12 @@
 """Context Manager to open database Connections and Assign Cursor
 and Commits at close"""
 import sqlite3
-from asyncio.windows_events import NULL
 class DBCM():
     """Context Manager for Connection to the database."""
     def __init__(self,name):
         """dunder init that opens the connection to the database with sqlite3"""
         self.conn = sqlite3.connect(name)
-        self.curr = NULL
+        self.curr = None
     def __enter__(self):
         """enter checks to see if we can assign the cursor from the connection,
          wrapped around try/catch, exception will throw if connection fails"""
