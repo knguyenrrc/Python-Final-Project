@@ -5,7 +5,7 @@ from scrape_weather import WeatherScraper
 
 class DBOperations:
     """Class to run database Operations: create, purge, fetch, insert"""
-    
+
     def __init__(self):
         """Initializes the class and sets the cursor"""
         # self.curr = cursor
@@ -24,7 +24,7 @@ class DBOperations:
                 max_temp real not null,
                 avg_temp real not null);""")
                 print('Table created succesfully.')
-    
+
     def purge_data(self):
         """Uses cursor on initialization to delete database"""
         with dbcm.DBCM("weather.sqlite") as curr:
@@ -85,60 +85,60 @@ class DBOperations:
             # Fetch February data
             feb_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-02-__%'")
             curr.execute(feb_data)
-            records.append(curr.fetchall())    
+            records.append(curr.fetchall())
 
             # Fetch March data
             mar_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-03-__%'")
             curr.execute(mar_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch April data
             apr_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-04-__%'")
             curr.execute(apr_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch May data
             may_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-05-__%'")
             curr.execute(may_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch June data
             jun_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-06-__%'")
             curr.execute(jun_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch July data
             jul_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-07-__%'")
             curr.execute(jul_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch August data
             aug_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-08-__%'")
             curr.execute(aug_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch September data
             sep_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-09-__%'")
             curr.execute(sep_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch October data
             oct_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-10-__%'")
             curr.execute(oct_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch November data
             nov_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-11-__%'")
             curr.execute(nov_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
             # Fetch December data
             dec_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-12-__%'")
             curr.execute(dec_data)
-            records.append(curr.fetchall())  
+            records.append(curr.fetchall())
 
         return records
-            
+
 
     def fetch_data_for_line(self, year, month):
         """Fetches the weather data for a given month of a given year."""
@@ -149,7 +149,7 @@ class DBOperations:
             records = curr.fetchall()
 
         return records
-        
+
 # data_dictionary = WeatherScraper()
 # dict = data_dictionary.get_data()
 # scrape_dict = data_dictionary.update_scrape(datetime.datetime(2022,11,11))
@@ -168,6 +168,6 @@ class DBOperations:
 # with dbcm.DBCM("weather.sqlite") as dbcm_cursor:
 #     ops = DBOperations(dbcm_cursor)
 #     ops.fetch_data_for_box(2022, 2022)
-    
+
 database = DBOperations()
 print(database.fetch_data_for_box(2021, 2022))
