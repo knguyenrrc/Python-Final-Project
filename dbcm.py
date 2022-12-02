@@ -1,7 +1,6 @@
 """Context Manager to open database Connections and Assign Cursor
 and Commits at close"""
 import sqlite3
-
 class DBCM():
     """Context Manager for Connection to the database."""
     def __init__(self,name):
