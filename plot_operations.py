@@ -1,3 +1,4 @@
+"""Used to plot desired weather data on a line plot as well as a box plot."""
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -9,7 +10,7 @@ class PlotOperations():
     with dbcm.DBCM("weather.sqlite") as curr:
 
         def plot_line_graph(self, year, month):
-
+            """Collects the desired month and year then plots on line plot."""
             dbOperations = DBOperations()
             data_line_plot = dbOperations.fetch_data_for_line(year, month)
 
@@ -27,7 +28,7 @@ class PlotOperations():
             plt.show()
         
         def plot_box_graph(self, start_year, end_year):
-
+            """Collects the desired start year and end year then plots on a box plot."""
             dbOperations = DBOperations()
             data_box_plot = dbOperations.fetch_data_for_box(start_year, end_year)
 
