@@ -1,3 +1,4 @@
+"""Used to plot desired weather data on a line plot as well as a box plot."""
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
