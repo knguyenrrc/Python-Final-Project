@@ -163,7 +163,7 @@ class WeatherScraper(HTMLParser):
             print("Exception happened:", error)
 
 #Test Program.
-if __name__ == "__main__":
-    test = WeatherScraper().get_data()
-    for k, v in test.items():
-        print(k, v)
+# if __name__ == "__main__":
+#     test = WeatherScraper().get_data()
+#     for k, v in test.items():
+#         print(k, v)

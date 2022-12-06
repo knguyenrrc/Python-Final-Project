@@ -143,4 +143,3 @@ class WeatherProcessor:
             plot_ops.plot_line_graph(year,month)
 
 WeatherProcessor()
-

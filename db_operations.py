@@ -66,8 +66,8 @@ class DBOperations:
         """returns data as a tuple to be used."""
         with dbcm.DBCM("weather.sqlite") as curr:
             records = curr.execute("SELECT * FROM CHK_weather")
-            for rows in records:
-                print(rows)
+            # for rows in records:
+            #     print(rows)
             return records
 
     def fetch_data_for_box(self, start_year, end_year):
@@ -149,6 +149,13 @@ class DBOperations:
             records = curr.fetchall()
 
         return records
+    
+    def fetch_latest_date(self):
+        """Fetches latest date stored in database"""
+        with dbcm.DBCM("weather.sqlite") as curr:
+            record = curr.execute("SELECT MAX(sample_date) FROM CHK_weather")
+            result = curr.fetchone()
+        return result[0]
 
 # data_dictionary = WeatherScraper()
 # dict = data_dictionary.get_data()
@@ -169,5 +176,12 @@ class DBOperations:
 #     ops = DBOperations(dbcm_cursor)
 #     ops.fetch_data_for_box(2022, 2022)
 
-database = DBOperations()
-print(database.fetch_data_for_box(2021, 2022))
+# database = DBOperations()
+# print(database.fetch_data_for_box(2021, 2022))
+
+# db = DBOperations()
+
+# a = db.fetch_latest_date().split('-')
+# for val in a:
+#     val = int(val)
+# print(datetime.datetime(int(a[0]),int(a[1]),int(a[2])))
