@@ -46,6 +46,6 @@ class PlotOperations():
             
 
 # test:
-show_graphs = PlotOperations()
-show_graphs.plot_line_graph(2022, 11)
-show_graphs.plot_box_graph(2022,2022)
+# show_graphs = PlotOperations()
+# show_graphs.plot_line_graph(2022, 11)
+# show_graphs.plot_box_graph(2022,2022)
