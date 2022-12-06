@@ -4,9 +4,9 @@ from plot_operations import PlotOperations
 from scrape_weather import WeatherScraper
 
 class WeatherProcessor:
-
-
+    """Interface to prompt user for input and processing"""
     def __init__(self):
+        """start of the user prompt and options"""
         self.ini_valid = False
         self.db = DBOperations()
         self.db.initialize_db()
@@ -38,12 +38,14 @@ class WeatherProcessor:
                 print("Please Enter Valid Option!\n")
 
     def download_data(self):
+        """runs database operations for scraping and saving data into database"""
         scraper = WeatherScraper()
         data = scraper.get_data()
         self.db.save_data(data)
         print("Downloaded All Data!\n")
     
     def update_data(self):
+        """grabs latests database date and gets month data"""
         scraper = WeatherScraper()
         return_date = self.db.fetch_latest_date()
         if return_date != "":
@@ -55,6 +57,7 @@ class WeatherProcessor:
             print("Updated data!\n")
 
     def gen_box_plot(self):
+        """runs box plot and checks for user input """
         begin_year_valid = False
         end_year_valid = False
         quit = False
@@ -97,6 +100,7 @@ class WeatherProcessor:
             plot_ops.plot_box_graph(begin_year,end_year)
 
     def gen_line_plot(self):
+        """runs line plot and checks for user input"""
         date = datetime.date.today()
         current_year = date.year
         month_valid = False
@@ -133,8 +137,9 @@ class WeatherProcessor:
                 print("Enter a valid year")
         
         if year_valid and month_valid:
+            if(month < 10):
+                month = "0" + str(month)
             plot_ops = PlotOperations()
             plot_ops.plot_line_graph(year,month)
 
 WeatherProcessor()
-
