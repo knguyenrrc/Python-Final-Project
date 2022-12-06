@@ -27,8 +27,9 @@ class WeatherProcessor:
                 +"from (Year) to (Year)...\n")  
                 self.gen_box_plot()             
             elif self.initial_input == "4":
-                # gen_line_plot()
-                print("Selected option 4")           
+                print("Selected option 4: Generate line plot"
+                +"with (MM) + (YYYY)...\n")
+                self.gen_line_plot()
             elif self.initial_input.lower() == "q":
                 print("Good bye!")
                 self.ini_valid = True
@@ -58,36 +59,81 @@ class WeatherProcessor:
         quit = False
         today = datetime.date.today()
         current_year = today.year
-        while not begin_year_valid and not end_year_valid and not quit:
+      
+        while not begin_year_valid and not quit:
             begin_year = input("Please enter the beginning year(YYYY) or (Q) to quit: ").strip()
-            if begin_year == "q":
-                quit = True
-            
-            if not quit:
-                end_year =input("Please enter the end Year(YYYY) or (Q) to quit: ").strip()
-            
-           
-            if len(begin_year) == 4 and begin_year.isnumeric():
+            if begin_year.lower() == "q":
+                quit = True     
+            elif len(begin_year) == 4 and begin_year.isnumeric():
                 begin_year = int(begin_year)
                 if(begin_year<= current_year):
                     begin_year_valid = True
+                    
                 else:
                     print("Enter a valid beginning year!")
             else:
                 print("Enter a valid beginning year")
+                
+               
+        while not end_year_valid and not quit:
+            end_year =input("Please enter the end Year(YYYY) or (Q) to quit: ").strip()
             
-            if len(end_year) == 4 and end_year.isnumeric():
+            if end_year.lower() == "q":
+                quit = True
+            elif len(end_year) == 4 and end_year.isnumeric():
                 end_year = int(end_year)
                 if(end_year<= current_year and end_year>=begin_year):
                     end_year_valid = True
+                    
                 else:
                     print("Enter a valid end year!")
             else:
                 print("Enter a valid end year")
+
+        
+        if end_year_valid and begin_year_valid:
+            plot_ops = PlotOperations()
+            plot_ops.plot_box_graph(begin_year,end_year)
+
+    def gen_line_plot(self):
+        date = datetime.date.today()
+        current_year = date.year
+        month_valid = False
+        year_valid = False
+        quit = False
+        while not month_valid and not quit:
+            month = input("Please enter the month(MM) or (Q) to quit: ").strip()
+            if month.lower() == "q":
+                quit = True     
+            elif len(month) <=2 and month.isnumeric():
+                month = int(month)
+                if month>0 and month<=12:
+                    month_valid = True
+                    
+                else:
+                    print("Enter a valid month!")
+            else:
+                print("Enter a valid month")
+                
+               
+        while not year_valid and not quit:
+            year =input("Please enter a Year(YYYY) or (Q) to quit: ").strip()
             
-
-
-
+            if year.lower() == "q":
+                quit = True
+            elif len(year) == 4 and year.isnumeric():
+                year = int(year)
+                if(year<= current_year):
+                    year_valid = True
+                    
+                else:
+                    print("Enter a valid year!")
+            else:
+                print("Enter a valid year")
+        
+        if year_valid and month_valid:
+            plot_ops = PlotOperations()
+            plot_ops.plot_line_graph(year,month)
 
 WeatherProcessor()
 
