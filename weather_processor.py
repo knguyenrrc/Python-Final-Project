@@ -5,6 +5,7 @@ from scrape_weather import WeatherScraper
 
 class WeatherProcessor:
 
+
     def __init__(self):
         self.ini_valid = False
         self.db = DBOperations()
