@@ -77,65 +77,15 @@ class DBOperations:
             begin = str(start_year) + "-01-01"
             end = str(end_year) + "-12-31"
 
-            # Fetch January data
-            jan_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-01-__%'")
-            curr.execute(jan_data)
-            records.append(curr.fetchall())
-
-            # Fetch February data
-            feb_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-02-__%'")
-            curr.execute(feb_data)
-            records.append(curr.fetchall())
-
-            # Fetch March data
-            mar_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-03-__%'")
-            curr.execute(mar_data)
-            records.append(curr.fetchall())
-
-            # Fetch April data
-            apr_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-04-__%'")
-            curr.execute(apr_data)
-            records.append(curr.fetchall())
-
-            # Fetch May data
-            may_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-05-__%'")
-            curr.execute(may_data)
-            records.append(curr.fetchall())
-
-            # Fetch June data
-            jun_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-06-__%'")
-            curr.execute(jun_data)
-            records.append(curr.fetchall())
-
-            # Fetch July data
-            jul_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-07-__%'")
-            curr.execute(jul_data)
-            records.append(curr.fetchall())
-
-            # Fetch August data
-            aug_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-08-__%'")
-            curr.execute(aug_data)
-            records.append(curr.fetchall())
-
-            # Fetch September data
-            sep_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-09-__%'")
-            curr.execute(sep_data)
-            records.append(curr.fetchall())
-
-            # Fetch October data
-            oct_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-10-__%'")
-            curr.execute(oct_data)
-            records.append(curr.fetchall())
-
-            # Fetch November data
-            nov_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-11-__%'")
-            curr.execute(nov_data)
-            records.append(curr.fetchall())
-
-            # Fetch December data
-            dec_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-12-__%'")
-            curr.execute(dec_data)
-            records.append(curr.fetchall())
+            for month in range(1, 13):
+                if month <= 9:
+                    weather_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-0" + str(month) + "-__%'")
+                    curr.execute(weather_data)
+                    records.append(curr.fetchall())
+                else:
+                    weather_data = ("SELECT avg_temp FROM CHK_weather WHERE (sample_date BETWEEN '" + begin + "' AND '" + end + "') AND sample_date LIKE '____%-" + str(month) + "-__%'")
+                    curr.execute(weather_data)
+                    records.append(curr.fetchall())
 
         return records
 
