@@ -1,7 +1,6 @@
 """Used to plot desired weather data on a line plot as well as a box plot."""
 import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
+
 import dbcm
 from db_operations import DBOperations
 
@@ -11,8 +10,8 @@ class PlotOperations():
 
         def plot_line_graph(self, year, month):
             """Collects the desired month and year then plots on line plot."""
-            dbOperations = DBOperations()
-            data_line_plot = dbOperations.fetch_data_for_line(year, month)
+            db_operations = DBOperations()
+            data_line_plot = db_operations.fetch_data_for_line(year, month)
 
             day = []
             line_temp = []
@@ -26,11 +25,11 @@ class PlotOperations():
             plt.ylabel("Average Temperature")
             plt.plot(day, line_temp)
             plt.show()
-        
+
         def plot_box_graph(self, start_year, end_year):
             """Collects the desired start year and end year then plots on a box plot."""
-            dbOperations = DBOperations()
-            data_box_plot = dbOperations.fetch_data_for_box(start_year, end_year)
+            db_operations = DBOperations()
+            data_box_plot = db_operations.fetch_data_for_box(start_year, end_year)
 
             box_temp = []
             all_temps = []
@@ -43,7 +42,7 @@ class PlotOperations():
 
             plt.boxplot(all_temps)
             plt.show()
-            
+
 
 # test:
 # show_graphs = PlotOperations()

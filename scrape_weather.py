@@ -1,10 +1,14 @@
+"""This Module scrapes weather data for max, min and mean."""
 
+import logging
 from html.parser import HTMLParser
 import urllib.request
 from datetime import datetime
 
 class WeatherScraper(HTMLParser):
-    """This module will scrape weather data from station 27174 for max, min and mean temperatures."""
+    """This module will scrape weather data for max, min and mean temperatures."""
+
+    logger = logging.getLogger("main." + __name__)
 
     def __init__(self):
         """Initializes an instance of the WeatherScraper class."""
@@ -24,24 +28,24 @@ class WeatherScraper(HTMLParser):
             self.row_date = ""
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:init:%s", error)
 
     def handle_starttag(self, tag, attrs):
         """Handles the starttag event."""
 
         try:
-            if tag.__eq__("tbody"):
+            if tag == "tbody":
                 self.tbody = True
 
-            if tag.__eq__("tr") and self.tbody is True:
+            if tag == "tr" and self.tbody is True:
                 self.tr = True
 
-            if tag.__eq__("td") and self.tr is True:
+            if tag == "td" and self.tr is True:
                 self.counter += 1
                 self.td = True
 
             # Format the abbr tag to a desired output.
-            if tag.__eq__("abbr") and self.tr is True:
+            if tag  == "abbr" and self.tr is True:
                 self.row_date = str(datetime.strptime(attrs[0][1], "%B %d, %Y").date())
 
             #Detects the last page from return data.
@@ -50,37 +54,38 @@ class WeatherScraper(HTMLParser):
                     self.last_page = True
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:starttag:%s", error)
 
     def handle_endtag(self, tag):
         """Handles the endtag event."""
 
         try:
-            if tag.__eq__("td"):
+            if tag == "td":
                 self.td = False
 
-            if tag.__eq__("tr"):
+            if tag == "tr":
                 self.counter = 0
                 self.tr = False
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:endtag:%s", error)
 
     def handle_data(self, data):
         """Handles the data event."""
         try:
             cast = False
-            if data.__eq__("Sum"):
+            if data == "Sum":
                 self.tbody = False
 
             #Generates daily_temps dictionary.
             if self.td is True and self.counter <= 3 and self.tbody is True:
                 try:
-                    tempCast = float(data)
+                    TempCast = float(data)
                     cast = True
                 except Exception as error:
                     cast = False
-                if(cast):
+                    self.logger.error("casting:%s", error)
+                if cast:
                     keys = ['Max', 'Min', 'Mean']
                     self.daily_temps[keys[self.counter - 1]] = data
 
@@ -90,10 +95,10 @@ class WeatherScraper(HTMLParser):
                 self.daily_temps = self.daily_temps.copy()
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:data:%s", error)
 
     def get_data(self) -> dict:
-        """Scrapes each month and year, returns a dictionary containing the required weather data."""
+        """Scrapes each month and year, returns a dict containing the required weather data."""
 
         try:
             today  = datetime.now()
@@ -118,12 +123,12 @@ class WeatherScraper(HTMLParser):
                     self.feed(html)
 
                 except Exception as error:
-                    print("Exception happened:", error)
+                    self.logger.error("scrape:get_data loop 1:%s", error)
 
             return self.weather
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:get_data:%s", error)
 
     def update_scrape(self, end_date:datetime) -> dict:
         """Only scrapes the data till it reaches the provided end month and year."""
@@ -155,12 +160,12 @@ class WeatherScraper(HTMLParser):
                     self.feed(html)
 
                 except Exception as error:
-                    print("Exception happened:", error)
+                    self.logger.error("scrape:update loop 1:%s", error)
 
             return self.weather
 
         except Exception as error:
-            print("Exception happened:", error)
+            self.logger.error("scrape:update:%s", error)
 
 #Test Program.
 # if __name__ == "__main__":
