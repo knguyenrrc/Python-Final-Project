@@ -23,6 +23,7 @@ class PlotOperations():
                 line_temp.append(rows[1])
             plt.xlabel("Day of the Month")
             plt.ylabel("Average Temperature")
+            plt.title("Daily Weather for " + str(month) + " / " + str(year))
             plt.plot(day, line_temp)
             plt.show()
 
@@ -41,6 +42,7 @@ class PlotOperations():
                 box_temp = []
 
             plt.boxplot(all_temps)
+            plt.title("Average Monthly Temperatures from " + str(start_year) + " to " + str(end_year))
             plt.show()
 
 
