@@ -26,6 +26,7 @@ class WeatherScraper(HTMLParser):
             self.weather = {}
 
             self.row_date = ""
+            logging.basicConfig(filename='error.log', level=logging.ERROR)
 
         except Exception as error:
             self.logger.error("scrape:init:%s", error)
@@ -168,7 +169,7 @@ class WeatherScraper(HTMLParser):
             self.logger.error("scrape:update:%s", error)
 
 #Test Program.
-# if __name__ == "__main__":
-#     test = WeatherScraper().get_data()
-#     for k, v in test.items():
-#         print(k, v)
+if __name__ == "__main__":
+    test = WeatherScraper().get_data()
+    for k, v in test.items():
+        print(k, v)
